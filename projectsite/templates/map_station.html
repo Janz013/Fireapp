@@ -45,8 +45,9 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script>
     var map = L.map('map').setView([19.8164, 118.7223], 13);
+
     var redIcon = L.icon({
-        iconUrl: '../static/img/firetruck.png',  // Replace with the path to your red marker icon
+        iconUrl: "{% static 'img/firetruck.png' %}", // Corrected the path to use Django's static template tag
         iconSize: [50, 50], // Adjust the size as needed
     });
 
@@ -54,11 +55,8 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Create an array to hold all the markers
-    var markers = [];
-
-    // Define the marker data
-    var fireData = {{ fireStations | safe }};
+    // Parse the fireStations data from a JSON script tag
+    var fireData = JSON.parse(document.getElementById('fireStationsData').textContent);
 
     // Loop through the marker data and create markers
     fireData.forEach(function(data) {
@@ -85,5 +83,9 @@
         // Add the marker to the markers array
         markers.push(marker);
     });
+</script>
+
+<script type="application/json" id="fireStationsData">
+    {{ fireStations|safe }}
 </script>
 {% endblock %}
