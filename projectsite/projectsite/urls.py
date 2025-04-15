@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 
-from fire.views import HomePageView
+from fire.views import HomePageView, ChartView,
 from fire import views
 
 urlpatterns = [
